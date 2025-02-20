@@ -1,0 +1,88 @@
+import java.io.IOException;
+
+import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+@WebServlet
+public class P5 extends HttpServlet
+{
+	private static final long serialVersionUID=1L;
+	public P5()
+	{
+		super();
+	}
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException,IOException
+	{
+		
+	}
+	protected void doPost(jakarta.servlet.http.HttpServletRequest request, jakarta.servlet.http.HttpServletResponse response) throws ServletException,IOException
+	{
+		try
+		{
+			System.out.println("Servlet Executed");
+			String param;
+			response.setContentType("text/html");
+			param = request.getParameter("param1");
+			System.out.println(param);
+		}
+		catch(Exception ee)
+		{
+			ee.printStackTrace();
+		}
+	}
+}
+
+
+
+import java.io.*;
+import java.awt.*;
+import java.awt.event.*;
+import java.net.*;
+import javax.swing.*;
+public class P6 extends JFrame implements ActionListener
+{
+	private static final long serialVersionUID=1L;
+	JTextField t1;
+	JButton b1;
+	public P6()
+	{
+		Container c = getContentPane();
+		c.setLayout(new FlowLayout());
+		t1 = new JTextField(20);
+		b1 = new JButton("SUBMIT");
+		c.add(t1);
+		c.add(b1);
+		b1.addActionListener(this);
+		setSize(400,400);
+		setVisible(true);
+	}
+	public void actionPerformed(ActionEvent e)
+	{
+		try
+		{
+			if(e.getSource()==b1)
+			{
+				URL url = new URL("http://localhost:8080/Akash/P5");
+				String q = URLEncoder.encode("param1")+"="+URLEncoder.encode(t1.getText());
+				URLConnection uc = url.openConnection();
+				uc.setDoOutput(true);
+				PrintStream dos = new PrintStream(uc.getOutputStream());
+				dos.println(q);
+				dos.close();
+				System.out.println("OK");
+				System.out.println(q);				
+			}
+		}
+		catch(Exception ee)
+		{
+			ee.printStackTrace();
+		}
+	}
+	public static void main(String args[])
+	{
+		new P6();
+	}
+	
+}
